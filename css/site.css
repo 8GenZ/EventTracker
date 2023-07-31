@@ -55,7 +55,8 @@ footer {
     --bs-btn-border-color:var(--jg-theme-600);
     --bs-btn-hover-bg : var(--jg-theme-700);
     --bs-btn-hover-border-color : var(--jg-theme700);
-
+    --bs-btn-active-bg: var(--jg-theme-800);
+    --bs-btn-active-border-color:var(--jg-theme-800)
 }
 
 .navbar,
@@ -94,3 +95,7 @@ footer {
     font-size: 4rem;
     padding-left: .5rem;
 }
+
+.shadow {
+    box-shadow: 0 0 8px 2px #8B0000 !important;
+} 
