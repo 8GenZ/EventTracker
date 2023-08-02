@@ -332,17 +332,29 @@
                     allowing easy event filtering based on selected cities from the dropdown.
                 </p>
                 <h5>displayStats</h5>
-                <p>The displayStats function is responsible for calculating various statistics about the attendance, and putting them on the page.
-                    Upon receiving the 'events' array as an argument, three variable are created and named total, max, min. Then using a for loop
-                    to iterate through the event attendance stats, we use math equations and if statements to gather the sum, maximum, and minimum 
-                    values. Then a new varaible is declared after the for loop which gathers the avererage using the total variable and the length of the 
-                    events array as operands. Finally by changing the innerText of the html elements which will display those statistics in a table into 
+                <p>The displayStats function is responsible for calculating various statistics about the attendance, and
+                    putting them on the page.
+                    Upon receiving the 'events' array as an argument, three variable are created and named total, max,
+                    min. Then using a for loop
+                    to iterate through the event attendance stats, we use math equations and if statements to gather the
+                    sum, maximum, and minimum
+                    values. Then a new varaible is declared after the for loop which gathers the avererage using the
+                    total variable and the length of the
+                    events array as operands. Finally by changing the innerText of the html elements which will display
+                    those statistics in a table into
                     the results of our math equations, we can diplay the statistics on screen.
                 </p>
                 <h5>displayEvents</h5>
-                <p>The display events function is structured similiarly to the displayStats function and also uses the events array as a parameter. Its purpose is to display all the events data on the page
-                    in table format. 
+                <p>The display events function is structured similiarly to the displayStats function and also uses the
+                    events array as a parameter. Its purpose is to display all the events data on the page
+                    in table format. To start, this function takes the events constant as a parameter. It then creates two constants that 
+                    each have the HTML element which contains the table on which the events will be  displayed and the template that will be 
+                    displayed on the table. It then clears out that table to prevent the table from duplicating. Then using a for loop it iterates 
+                    through the events array. Then we declare a new variable called TableRow which will create a clone of the template and using 
+                    querySelector we assign a property of the events array to each cloned template row. Then by using append child on the eventsTable
+                    constant and using the results of tableRow, we can display each cloned row on the table.
                 </p>
+                <h5>filterEvents</h5>
             </div>
         </div>
     </main>
