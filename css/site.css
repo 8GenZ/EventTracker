@@ -56,7 +56,7 @@ footer {
     --bs-btn-hover-bg : var(--jg-theme-700);
     --bs-btn-hover-border-color : var(--jg-theme700);
     --bs-btn-active-bg: var(--jg-theme-800);
-    --bs-btn-active-border-color:var(--jg-theme-800)
+    --bs-btn-active-border-color:var(--jg-theme-800);
 }
 
 .navbar,

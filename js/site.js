@@ -233,6 +233,7 @@ function saveEvents() {
 
     buildDropDown();
 
-
+    let modal = bootstrap.Modal.getInstance(document.getElementById('AddDataModal'));
+    modal.hide();
 
 }

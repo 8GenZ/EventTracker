@@ -30,7 +30,7 @@
             <div class="container-fluid">
                 <a class="navbar-brand" href="/index.html">
                     <img src="/img/mark.svg" height="50" alt="developer logo">
-                    App Name</a>
+                    Checkpoint</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,7 @@
                             <a class="nav-link" href="/code.html">The Code</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://github.com/8GenZ">The repo</a>
+                            <a class="nav-link" href="https://github.com/8GenZ/EventTracker">The repo</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="https://sol-dev-portfolio.netlify.app">About</a>
@@ -69,27 +69,279 @@
             <div class="col-12 col-lg-8">
                 <pre class="line-numbers">
                     <code class="language-js">
-                        function displayMessage() {
-                            let inputbox = document.getElementById('message');
-                        
-                            let message = inputbox.value;
-                        
-                        
-                            Swal.fire(
-                                {
-                                    backdrop: false,
-                                    title: 'App Name',
-                                    text: message
-                                }
-                            )
+                        const events = [
+                        {
+                            event: "ComicCon",
+                            city: "New York",
+                            state: "New York",
+                            attendance: 240000,
+                            date: "06/01/2017",
+                        },
+                        {
+                            event: "ComicCon",
+                            city: "New York",
+                            state: "New York",
+                            attendance: 250000,
+                            date: "06/01/2018",
+                        },
+                        {
+                            event: "ComicCon",
+                            city: "New York",
+                            state: "New York",
+                            attendance: 257000,
+                            date: "06/01/2019",
+                        },
+                        {
+                            event: "ComicCon",
+                            city: "San Diego",
+                            state: "California",
+                            attendance: 130000,
+                            date: "06/01/2017",
+                        },
+                        {
+                            event: "ComicCon",
+                            city: "San Diego",
+                            state: "California",
+                            attendance: 140000,
+                            date: "06/01/2018",
+                        },
+                        {
+                            event: "ComicCon",
+                            city: "San Diego",
+                            state: "California",
+                            attendance: 150000,
+                            date: "06/01/2019",
+                        },
+                        {
+                            event: "HeroesCon",
+                            city: "Charlotte",
+                            state: "North Carolina",
+                            attendance: 40000,
+                            date: "06/01/2017",
+                        },
+                        {
+                            event: "HeroesCon",
+                            city: "Charlotte",
+                            state: "North Carolina",
+                            attendance: 45000,
+                            date: "06/01/2018",
+                        },
+                        {
+                            event: "HeroesCon",
+                            city: "Charlotte",
+                            state: "North Carolina",
+                            attendance: 50000,
+                            date: "06/01/2019",
+                        },
+                    ];
+                    
+                    function getEvents() {
+                    
+                        let storedEvents = JSON.parse(localStorage.getItem('jgcevents') || '[]');
+                    
+                        if(storedEvents == 0) {
+                            storedEvents = events;
+                            localStorage.setItem('jgcevents', JSON.stringify(events));
                         }
+                    
+                        return storedEvents;
+                    }
+                    
+                    function buildDropDown() {
+                    
+                        // get current events 
+                        let currentEvents = getEvents();
+                    
+                        // get list of unique cities
+                        let eventCities = currentEvents.map(event => event.city);
+                        let distinctCities = new Set(eventCities);
+                        let dropdownChoices = ['All', ...distinctCities,];
+                    
+                        const dropdownDiv = document.getElementById('city-dropdown');
+                        const dropdownItemTemplate = document.getElementById('dropdown-template');
+                    
+                        dropdownDiv.innerHTML = '';
+                    
+                        // with each unique city,
+                    
+                        dropdownChoices.forEach(choice => {
+                    
+                            //  copy the dropdown template 
+                            let dropdownItemCopy = dropdownItemTemplate.content.cloneNode(true);
+                    
+                            // change that copies text 
+                            let aTag = dropdownItemCopy.querySelector('a');
+                            aTag.innerText = choice;
+                    
+                            // put it in the dropdown
+                            dropdownDiv.appendChild(dropdownItemCopy);
+                        });
+                    
+                        document.getElementById("stats-location").textContent = 'All';
+                        displayEvents(currentEvents);
+                        displayStats(currentEvents);
+                    }
+                    
+                    function displayEvents(events) {
+                    
+                        // find the table on page
+                        const eventsTable = document.getElementById('events-table');
+                        // find the template
+                        const eventTemplate = document.getElementById('table-row-template');
+                    
+                        // clear out table
+                        eventsTable.innerHTML = "";
+                    
+                        // for each event:
+                        for (index = 0; index < events.length; index++) {
+                            // get one event
+                            let event = events[index];
+                            // --clone the template
+                            let tableRow = eventTemplate.content.cloneNode(true);
+                            // --get each property of an event
+                            // --insert each property into the cloned template
+                            let eventNameCell = tableRow.querySelector('[data-id="event"]')
+                            eventNameCell.innerText = event.event;
+                    
+                            tableRow.querySelector('[data-id="city"]').innerText = event.city;
+                            tableRow.querySelector('[data-id="state"]').innerText = event.state;
+                            tableRow.querySelector('[data-id="attendance"]').innerText = event.attendance.toLocaleString();
+                            tableRow.querySelector('[data-id="date"]').innerText = new Date(event.date).toLocaleDateString();
+                    
+                            // --insert event data into table    
+                            eventsTable.appendChild(tableRow);
+                        }
+                    
+                    };
+                    
+                    function displayStats(events) {
+                    
+                        let total = 0;
+                        let max = 0;
+                        let min = Infinity;
+                    
+                        for (let index = 0; index < events.length; index++) {
+                            let event = events[index];
+                    
+                            total += event.attendance;
+                    
+                            if (index > max) {
+                                max = event.attendance;
+                            }
+                            if (index < min) {
+                                min = event.attendance;
+                            }
+                        }
+                    
+                        let average = total / events.length;
+                    
+                        document.getElementById('total-att').innerText = total.toLocaleString();
+                        document.getElementById('average-att').innerText = Math.round(average).toLocaleString();
+                        document.getElementById('max-att').innerText = max.toLocaleString();
+                        document.getElementById('min-att').innerText = min.toLocaleString();
+                    
+                    }
+                    
+                    function filterEvents(dropdownItemClicked) {
+                        let cityName = dropdownItemClicked.innerText;
+                    
+                        document.getElementById("stats-location").textContent = cityName;
+                    
+                        let allEvents = getEvents();
+                    
+                        let filteredEvents = [];
+                    
+                        if (cityName == 'All') {
+                            filteredEvents = allEvents;
+                        } else {
+                            for (let i = 0; i < allEvents.length; i++) {
+                                let event = allEvents[i];
+                    
+                                if (event.city == cityName) {
+                                    filteredEvents.push(event);
+                                }
+                            }
+                        }
+                    
+                        displayStats(filteredEvents);
+                        displayEvents(filteredEvents);
+                    }
+                    
+                    function saveEvents() {
+                    
+                        let eventName = document.getElementById('newEvent').value;
+                        let city = document.getElementById('newCity').value;
+                    
+                        let stateSelect = document.getElementById('newState');
+                        let selectedIndex = stateSelect.selectedIndex;
+                        let selectedOption = stateSelect.options[selectedIndex];
+                        let state = selectedOption.text;
+                    
+                        let attendance = parseInt(document.getElementById('newAttendance').value);
+                    
+                        let dateString = document.getElementById('newDate').value;
+                    
+                        dateString = `${dateString} 00:00`;
+                    
+                        let eventDate = new Date(dateString).toLocaleDateString();
+                    
+                        let newEvent = {
+                            event: eventName,
+                            city: city,
+                            state: state,
+                            attendance: attendance,
+                            date: eventDate,
+                        };
+                    
+                        let allEvents = getEvents();
+                    
+                        allEvents.push(newEvent);
+                    
+                        localStorage.setItem('jgcevents', JSON.stringify(allEvents) );
+                    
+                        let form = document.getElementById('newEventForm');
+                        form.reset();
+                    
+                        buildDropDown();
+                    
+                    
+                    
+                    }
+                    
                     </code>
                 </pre>
             </div>
             <div class="col-12 col-lg-4">
-                <p>The Code is structured in one funtion</p>
-                <h5>displayMessage</h5>
-                <p>Shows a Sweetalert with the value of the <code>message</code> variable
+                <p>The Code is structured in 6 Functions</p>
+                <h5>events:</h5>
+                <p>First a constant is declared with the name of events which contains an array of objects. These
+                    objects are various events and their details which will be displayed
+                    on the page.
+                </p>
+                <h5>getEvents</h5>
+                <p>This function retrieves events from the local storage. It checks if there are any stored events, and
+                    if not, it initializes the storage with the default events data. Then, it returns the events array.
+                </p>
+                <h5>buildDropDown:</h5>
+                <p> The buildDropDown function is the entry point of our code, called when the HTML page loads. It gets
+                    the current events using getEvents, creates a dropdown menu with unique city names from the events,
+                    and sets the options for the dropdown. Then, it clears any previous dropdown items and iterates
+                    through the city choices to create and append dropdown items. The default location for statistics is
+                    set to 'All', and the function calls displayEvents and displayStats to show the events and stats. It
+                    sets up the dropdown menu with unique city names and initializes event and statistic display,
+                    allowing easy event filtering based on selected cities from the dropdown.
+                </p>
+                <h5>displayStats</h5>
+                <p>The displayStats function is responsible for calculating various statistics about the attendance, and putting them on the page.
+                    Upon receiving the 'events' array as an argument, three variable are created and named total, max, min. Then using a for loop
+                    to iterate through the event attendance stats, we use math equations and if statements to gather the sum, maximum, and minimum 
+                    values. Then a new varaible is declared after the for loop which gathers the avererage using the total variable and the length of the 
+                    events array as operands. Finally by changing the innerText of the html elements which will display those statistics in a table into 
+                    the results of our math equations, we can diplay the statistics on screen.
+                </p>
+                <h5>displayEvents</h5>
+                <p>The display events function is structured similiarly to the displayStats function and also uses the events array as a parameter. Its purpose is to display all the events data on the page
+                    in table format. 
                 </p>
             </div>
         </div>

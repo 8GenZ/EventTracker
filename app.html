@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>App Name: A Coding Challenge</title>
+    <title>Checkpoint: A Coding Challenge</title>
 
 
     <!-- bs icons -->
@@ -47,7 +47,7 @@
                             <a class="nav-link" href="/code.html">The Code</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="https://github.com/8GenZ">The repo</a>
+                            <a class="nav-link" href="https://github.com/8GenZ/EventTracker">The repo</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="https://sol-dev-portfolio.netlify.app">About</a>
@@ -175,7 +175,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="newEventForm" onsubmit="saveEvents()">
+                    <form id="newEventForm">
                         <div class="mb-3">
                             <label for="newEvent" class="col-form-label">Event Name</label>
                             <input type="text" class="form-control" id="newEvent" placeholder="Event" required>
@@ -270,6 +270,16 @@
     <!-- custom js -->
     <script src="/js/site.js"></script>
 
+    <script>
+        let form = document.getElementById('newEventForm');
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            saveEvents();
+        }
+
+        );
+    </script>
 
 </body>
 
