@@ -347,14 +347,30 @@
                 <h5>displayEvents</h5>
                 <p>The display events function is structured similiarly to the displayStats function and also uses the
                     events array as a parameter. Its purpose is to display all the events data on the page
-                    in table format. To start, this function takes the events constant as a parameter. It then creates two constants that 
-                    each have the HTML element which contains the table on which the events will be  displayed and the template that will be 
-                    displayed on the table. It then clears out that table to prevent the table from duplicating. Then using a for loop it iterates 
-                    through the events array. Then we declare a new variable called TableRow which will create a clone of the template and using 
-                    querySelector we assign a property of the events array to each cloned template row. Then by using append child on the eventsTable
+                    in table format. To start, this function takes the events constant as a parameter. It then creates
+                    two constants that
+                    each have the HTML element which contains the table on which the events will be displayed and the
+                    template that will be
+                    displayed on the table. It then clears out that table to prevent the table from duplicating. Then
+                    using a for loop it iterates
+                    through the events array. Then we declare a new variable called TableRow which will create a clone
+                    of the template and using
+                    querySelector we assign a property of the events array to each cloned template row. Then by using
+                    append child on the eventsTable
                     constant and using the results of tableRow, we can display each cloned row on the table.
                 </p>
                 <h5>filterEvents</h5>
+                <p>
+                    The filterEvents function is a crucial part of the code, allowing users to filter events by city
+                    through a dropdown menu. Upon a user's selection of a city from the dropdown, this function
+                    retrieves the selected city's name, updates the displayed city name on the webpage, retrieves all
+                    events using the getEvents function, and filters these events based on the chosen city. If 'All' is
+                    selected, it displays all events; otherwise, it selects events that match the chosen city. Finally,
+                    it updates the webpage by calling the displayStats and displayEvents functions with the filtered
+                    events, ensuring that the statistics and event table are updated to display the user's filter
+                    choice.
+
+                </p>
             </div>
         </div>
     </main>
